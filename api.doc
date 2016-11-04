@@ -1,0 +1,34 @@
+
+
+
+API documentation
+
+Retrieve all dog information
+HTTP GET : /doginfo
+Response in Json Array
+Sample Response :[{"id":1,"imageUrl":"http://i.imgur.com/eE29vX4.png","voteup":0,"votedown":0,"breed":"Labrador"},....]
+
+
+Retrive dog information by id
+HTTP GET : /doginfo/{dogInfoId}
+Response in JsonNode
+Sample data : {"id":1,"imageUrl":"http://i.imgur.com/eE29vX4.png","voteup":0,"votedown":0,"breed":"Labrador"},
+
+Vote up for particular dog with a clientId
+HTTP GET : /doginfo/voteup/{dogInfoId}/clientId/{clientId}
+Sample Successful response : {"status":"Successul","message":""}
+if clientId votes more than once, he/she will get a error response:
+Sample Fail response: {"status":"Fail","message":"unable to vote with id: 3"}
+
+
+Get all imageURL by grouping of breedName
+HTTP GET : /group/doginfo
+Sample Response:{"Retriver": [{"id": 55, "imageUrl": "http://i.imgur.com/wR38uBx.png"},..."Pug" :[{*dogInfodata*}],]} 
+
+Get all imageURL by grouping of a particular breed
+HTTP GET : /group/doginfo/pug
+Sample Response:{"Pug": [{"id": 55, "imageUrl": "http://i.imgur.com/wR38uBd.png"}...]}
+
+
+
+

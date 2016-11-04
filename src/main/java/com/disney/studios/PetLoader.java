@@ -6,6 +6,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
+
+import com.disney.studios.model.DogInfo;
+import com.disney.studios.repository.DogInfoRepository;
+
 import javax.sql.DataSource;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,6 +21,8 @@ import java.io.InputStreamReader;
  *
  * Created by fredjean on 9/21/15.
  */
+
+
 @Component
 public class PetLoader implements InitializingBean {
     // Resources to the different files we need to load.
@@ -34,6 +40,10 @@ public class PetLoader implements InitializingBean {
 
     @Autowired
     DataSource dataSource;
+  
+    
+    @Autowired
+    private DogInfoRepository dogInfoRepository;
 
     /**
      * Load the different breeds into the data source after
@@ -47,6 +57,7 @@ public class PetLoader implements InitializingBean {
         loadBreed("Pug", pugs);
         loadBreed("Retriever", retrievers);
         loadBreed("Yorkie", yorkies);
+        
     }
 
     /**
@@ -56,14 +67,16 @@ public class PetLoader implements InitializingBean {
      * @param source The file holding the breeds.
      * @throws IOException In case things go horribly, horribly wrong.
      */
+ 
     private void loadBreed(String breed, Resource source) throws IOException {
+    	
+    	
+    	
         try ( BufferedReader br = new BufferedReader(new InputStreamReader(source.getInputStream()))) {
             String line;
             while ((line = br.readLine()) != null) {
-                System.out.println(line);
-                /* TODO: Create appropriate objects and save them to
-                 *       the datasource.
-                 */
+            	dogInfoRepository.save(new DogInfo(breed, line)); 	
+               
             }
         }
     }
